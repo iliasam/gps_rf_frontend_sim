@@ -62,7 +62,8 @@ volatile buff_pos_t curr_tx_position = BUFF_POS_START;
 /// Flag - Changed DMA TX position (swap from one buffer half to another)
 volatile uint8_t tx_position_changed = 0;
 
-/// Used for noise generation
+/// Used for noise generation, 0 is no noise, max is (MAX_NOISE_VAL-1)
+/// See the code - some values are hardcoded!
 uint8_t tmp_noise = 15;
 
 //*************************************************************
@@ -114,8 +115,9 @@ void sim_handling(void)
     int rnd = rand();
     rnd = rnd & 0x3; //noise amplitude
     tmp_noise = 45 + (uint8_t)rnd;
-    
     sim_add_noise(fill_ptr, tmp_noise);
+    
+    
     sim_nav_data_prn_cnt++;
   }
   
